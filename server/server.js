@@ -6,6 +6,7 @@ import db from './db/db-connection.js';
 //routes from db
 import studentsRouter from "./routes/students.js"
 import contactRouter from "./routes/contact.js"
+import joinedListRouter from "./routes/joinedlist.js"
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use('/students', studentsRouter);
 app.use('/contact', contactRouter);
+app.use('/joinedList', joinedListRouter);
 
 // creates an endpoint for the route /api
 app.get('/', (req, res) => {
