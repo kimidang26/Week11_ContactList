@@ -1,4 +1,5 @@
 import { useReducer , useEffect, useState} from "react";
+import React from "react";
 
 const reducer = (state, action) =>{
     console.log(action, 'this is the action');
@@ -51,6 +52,7 @@ function Contacts ()  {
       }, []);
 
 // ********USE REDUCER PT 2 WITH EVENT HANDLER**********
+//Inital state of the form is empty
 const initialState = {
     id: "",
     parentfirst_name: "", 
@@ -81,7 +83,7 @@ const handleAddContact = async (e) => {
     };
     console.log(newContact);
 
-    const response = await fetch(`http://localhost:8080/contact`, {
+    const response = await fetch('http://localhost:8080/contact', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -107,7 +109,9 @@ const handleDeleteContact = async (handleDeleteContactCallback) => {
 }
 
 
-
+const AddContact = (newContact) => {
+  setContacts((contacts) => [...contacts, newContact])
+}
 
 // **********WHAT IS ON BROWSER*************
 
@@ -148,21 +152,22 @@ const handleDeleteContact = async (handleDeleteContactCallback) => {
             })}
             </tbody>
          </table>
+         
          <div className="AddContact">
             <h2>Add A Contact</h2>
             <form id="add-contact" className="form-contact" action="#" onSubmit={handleAddContact}>
               <fieldset>
                 <label>Parent First Name:</label>
-                  <input type="text" id="editFirstName" placeholder="parent first name" value={state.parentfirst_name} onChange={(e) => dispatch({type: "editFirstName", payload: e.target.value,})} />
+                  <input type="text" id="editFirstName" name="firstname" placeholder="parent first name" value={state.parentfirst_name} onChange={(e) => dispatch({type: "editFirstName", payload: e.target.value,})} />
                   <br />
                 <label>Parent Last Name:</label>
-                  <input type="text" id="editLastName" placeholder="parent last name" value={state.parentlast_name} onChange={(e) => dispatch({type: "editLasttName", payload: e.target.value,})} />
+                  <input type="text" id="editLastName" name="lastname" placeholder="parent last name" value={state.parentlast_name} onChange={(e) => dispatch({type: "editLasttName", payload: e.target.value,})} />
                   <br />
                 <label>Parent Cell Number:</label>
-                  <input type="text" id="editCellPhone" placeholder="parent cell number" value={state.cell_phone} onChange={(e) => dispatch({type: "editCellPhone", payload: e.target.value,})} />
+                  <input type="text" id="editCellPhone" name="cellphone" placeholder="parent cell number" value={state.cell_phone} onChange={(e) => dispatch({type: "editCellPhone", payload: e.target.value,})} />
                   <br />
                 <label>Parent Email:</label>
-                  <input type="text" id="editEmail" placeholder="parent email" value={state.email} onChange={(e) => dispatch({type: "editEmail", payload: e.target.value,})} />
+                  <input type="text" id="editEmail" name="email" placeholder="parent email" value={state.email} onChange={(e) => dispatch({type: "editEmail", payload: e.target.value,})} />
                   <br/>
               </fieldset>
                 <input type="submit" value="Add Contact" />
