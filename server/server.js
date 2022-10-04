@@ -21,7 +21,7 @@ app.use('/contact', contactRouter);
 
 // creates an endpoint for the route /api
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello from My template ExpressJS' });
+  res.json({ message: 'student contact list' });
 });
 
 // // create the get request for students
