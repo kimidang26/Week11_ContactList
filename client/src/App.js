@@ -1,13 +1,13 @@
 import "./App.css";
-// import Students from "./components/students";
-import Contacts from "./components/contacts.js"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Contacts from "./components/contacts.js";
+import Home from "./components/Home.js";
 
 function App() {
   return (
     <div className="App">
-      Hello from Techtonica
-      {/* <Students /> */}
-      <Contacts />
+        <h1>Welcome to the Contact Portal</h1>
+          <Contacts />
     </div>
   );
 }

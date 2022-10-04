@@ -64,16 +64,23 @@ const [state, dispatch] = useReducer(reducer, initialState);
 console.log(state);
 
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    setContacts([...contacts, state]);
-}
+// const handleSubmit = (e) => {
+//     e.preventDefault();
+//     setContacts([...contacts, state]);
+// }
 
-//**********POST REQUEST**********/
-const handleAddEvent = async (e) => {
+//**********POST REQUEST (ADD NEW CONTACT)**********/
+const handleAddContact = async (e) => {
     e.preventDefault();
-    const newContact = { id: state.id, parentfirst_name: state.parentfirst_name, parentlast_name: state.parentlast_name, phone_number: state.phone_number, email: state.email};
+    const newContact = {
+      id: state.id, 
+      parentfirst_name: state.parentfirst_name, 
+      parentlast_name: state.parentlast_name, 
+      phone_number: state.phone_number, 
+      email: state.email
+    };
     console.log(newContact);
+
     const response = await fetch(`http://localhost:8080/contact`, {
         method: 'POST',
         headers: {
@@ -85,9 +92,19 @@ const handleAddEvent = async (e) => {
     const content = await response.json();
     console.log(content);
     setContacts([...contacts, content]);
+    dispatch({ type: 'clearForm' })
 };
 
+// **************Delete*************
 
+const handleDeleteContact = async (handleDeleteContactCallback) => {
+  const response = await fetch(`http://localhost:2626/species/${handleDeleteContactCallback}`, {
+    method: 'DELETE',
+  })
+  await response.json();
+  const deleteContactFunction = contacts.filter((contact) => contact.id !== handleDeleteContactCallback);
+  setContacts(deleteContactFunction);
+}
 
 
 
@@ -96,7 +113,7 @@ const handleAddEvent = async (e) => {
 
 
       return (
-    
+        <section className="contacts-page">
         <div className="contact">
           <h2> List of Contact</h2>
           <table>
@@ -124,18 +141,35 @@ const handleAddEvent = async (e) => {
                   <td>{contact.cell_phone}</td>
                   <td>{contact.email}</td>
                   {/* <td><img src={trashicon} alt="Trash Can" onClick={() => handleDeleteAnimal(animal.id)}/></td> */}
-                  {/* <td><button onClick={() => handleDeleteAnimal(animal.id)}>DELETE</button></td> */}
+                  <td><button onClick={() => handleDeleteContact(contact.id)}>DELETE</button></td>
                 </tr>
               
               );
             })}
             </tbody>
          </table>
-
-            
-            
-    
+         <div className="AddContact">
+            <h2>Add A Contact</h2>
+            <form id="add-contact" className="form-contact" action="#" onSubmit={handleAddContact}>
+              <fieldset>
+                <label>Parent First Name:</label>
+                  <input type="text" id="editFirstName" placeholder="parent first name" value={state.parentfirst_name} onChange={(e) => dispatch({type: "editFirstName", payload: e.target.value,})} />
+                  <br />
+                <label>Parent Last Name:</label>
+                  <input type="text" id="editLastName" placeholder="parent last name" value={state.parentlast_name} onChange={(e) => dispatch({type: "editLasttName", payload: e.target.value,})} />
+                  <br />
+                <label>Parent Cell Number:</label>
+                  <input type="text" id="editCellPhone" placeholder="parent cell number" value={state.cell_phone} onChange={(e) => dispatch({type: "editCellPhone", payload: e.target.value,})} />
+                  <br />
+                <label>Parent Email:</label>
+                  <input type="text" id="editEmail" placeholder="parent email" value={state.email} onChange={(e) => dispatch({type: "editEmail", payload: e.target.value,})} />
+                  <br/>
+              </fieldset>
+                <input type="submit" value="Add Contact" />
+            </form>
+         </div>
         </div>
+    </section>
       );
 }
 

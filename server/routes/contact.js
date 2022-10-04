@@ -27,17 +27,29 @@ router.get('/', async (req, res) => {
     }
     console.log([newContact.parentfirst_name, newContact.parentlast_name, newContact.cell_phone, newContact.email ]);
     try {
-    const updateContact = await db.query(
+    const newContact = await db.query(
       'INSERT INTO contact(parentfirst_name, parentlast_name, cell_phone, email) VALUES($1, $2, $3, $4) RETURNING *',
       [ newContact.parentfirst_name, newContact.parentlast_name , newContact.cell_phone, newContact.email ],
     );
     console.log(req.body);
-    res.json(updateContact);
+    res.json(newContact);
     } catch (e) {
       return res.status(400).json({ e });
     }
   });
 
 
+  // **************Delete*************
+
+  router.delete('/:id', async (req, res) => {
+    // : acts as a placeholder
+    const contactId = req.params.id;
+    try {
+      await db.none('DELETE FROM users WHERE id=$1', [contactId]);
+      res.send({ status: 'success' });
+    } catch (e) {
+      return res.status(400).json({ e });
+    }
+  });
 
 export default router;
