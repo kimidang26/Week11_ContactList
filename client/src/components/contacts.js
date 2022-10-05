@@ -20,13 +20,17 @@ const reducer = (state, action) =>{
         case 'editEmail':
         return { ...state, email: action.payload };
 
+        case 'editStudentId':
+        return { ...state, student_id: action.payload };
+
         case 'clearForm':
             return {
                 id: "", 
                 parentfirst_name: "", 
                 parentlast_name: "", 
                 cell_phone:"", 
-                email: ""
+                email: "",
+                student_id: "",
             };
 
       default:
@@ -58,7 +62,8 @@ const initialState = {
     parentfirst_name: "", 
     parentlast_name: "", 
     cell_phone:"", 
-    email: ""
+    email: "",
+    student_id: "",
 
 };
 
@@ -79,8 +84,10 @@ const handleAddContact = async (e) => {
       parentfirst_name: state.parentfirst_name, 
       parentlast_name: state.parentlast_name, 
       cell_phone: state.cell_phone, 
-      email: state.email
+      email: state.email,
+      student_id: state.student_id,
     };
+    //DATA FROM USER
     console.log(newContact);
 
     const response = await fetch('http://localhost:8080/contact', {
@@ -92,15 +99,18 @@ const handleAddContact = async (e) => {
         body: JSON.stringify(newContact)
     });
     const content = await response.json();
+    //DATA FROM SERVER
     console.log(content);
-    setContacts([...contacts, content]);
+    //CONTENT CREATES A NEW ARRAY DOES A FULL REPLACEMENT OF THE CONTACTS
+    //... PULLS ONLY VALUES FROM OLD ARRAY AND WILL ADD TO NEW ARRAY
+    setContacts([...contacts, ...content]);
     dispatch({ type: 'clearForm' })
 };
 
 // **************Delete*************
 
 const handleDeleteContact = async (handleDeleteContactCallback) => {
-  const response = await fetch('http://localhost:2626/contact/${handleDeleteContactCallback}', {
+  const response = await fetch('http://localhost:8080/contact/${handleDeleteContactCallback}', {
     method: 'DELETE',
   })
   await response.json();
@@ -129,6 +139,7 @@ const AddContact = (newContact) => {
                 <th>Parent Last Name</th>
                 <th>Cell Phone</th>
                 <th>Email</th>
+                <th>Student ID</th>
               </tr>
     
             </thead>
@@ -144,6 +155,7 @@ const AddContact = (newContact) => {
                   <td>{contact.parentlast_name}</td>
                   <td>{contact.cell_phone}</td>
                   <td>{contact.email}</td>
+                  <td>{contact.student_id}</td>
                   {/* <td><img src={trashicon} alt="Trash Can" onClick={() => handleDeleteAnimal(animal.id)}/></td> */}
                   <td><button onClick={() => handleDeleteContact(contact.id)}>DELETE</button></td>
                 </tr>
@@ -168,6 +180,9 @@ const AddContact = (newContact) => {
                   <br />
                 <label>Parent Email:</label>
                   <input type="text" id="editEmail" name="email" placeholder="parent email" value={state.email} onChange={(e) => dispatch({type: "editEmail", payload: e.target.value,})} />
+                  <br/>
+                <label>Student ID:</label>
+                  <input type="text" id="editStudentId" name="ID" placeholder="Student ID" value={state.student_id} onChange={(e) => dispatch({type: "editStudentId", payload: e.target.value,})} />
                   <br/>
               </fieldset>
                 <input type="submit" value="Add Contact" />

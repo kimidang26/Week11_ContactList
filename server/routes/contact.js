@@ -22,18 +22,20 @@ router.get('/', async (req, res) => {
       parentlast_name: req.body.parentlast_name,
       cell_phone: req.body.cell_phone,
       email: req.body.email,
+      student_id: req.body.student_id,
  
   
     }
     console.log([newContact.parentfirst_name, newContact.parentlast_name, newContact.cell_phone, newContact.email ]);
     try {
-    const newContact = await db.query(
-      'INSERT INTO contact (parentfirst_name, parentlast_name, cell_phone, email) VALUES($1, $2, $3, $4) RETURNING *',
-      [ newContact.parentfirst_name, newContact.parentlast_name , newContact.cell_phone, newContact.email ],
+    const addContact = await db.query(
+      'INSERT INTO contact ( parentfirst_name, parentlast_name, cell_phone, email, student_id) VALUES($1, $2, $3, $4, $5) RETURNING *',
+      [ newContact.parentfirst_name, newContact.parentlast_name , newContact.cell_phone, newContact.email, newContact.student_id ],
     );
     console.log(req.body);
-    res.send(newContact);
+    res.send(addContact);
     } catch (e) {
+      console.log(e.message);
       return res.status(400).json({ e });
     }
   });
