@@ -43,6 +43,10 @@ const reducer = (state, action) =>{
 function Contacts ()  {
     const [contacts, setContacts] = useState([]);  
 
+    // Another State to control the existing student Id that the user wants to edit
+  const [editContactId, setEditContactId] = useState(null);
+
+
 //****************Fetches/Gets Contact Table***********/
 
     const getContacts = async () => {
@@ -123,6 +127,33 @@ const AddContact = (newContact) => {
   setContacts((contacts) => [...contacts, newContact])
 }
 
+
+//****************EDIT DATA/PUT**************/
+
+// const updateContact = (savedContact) => {
+//   console.log("Line 130 savedContact", savedContact);
+//   setContacts((contacts) =>{
+//     const newArrayContacts = [];
+//     for (let contact of contacts){
+//       if(contact.id === savedContact.id){
+//         newArrayContacts.push(savedContact);
+//       } else {
+//         newArrayContacts.push(contact)
+//       }
+//     }
+//     return newArrayContacts;
+//   })
+//    // This line is only to close the form;
+//    setEditContactId(null);
+// }
+
+// const onEdit = (contact) => {
+//     console.log("This is line 151 on contact component", contact);
+//   const editingID = contact.id;
+//     console.log("Just the contact id", contact.id)
+//     setEditContactId(editingID);
+// }
+
 // **********WHAT IS ON BROWSER*************
 
 
@@ -148,6 +179,9 @@ const AddContact = (newContact) => {
       
             <tbody>
             {contacts.map((contact,index) => {
+              // if (contact.id === editContactId){
+                
+              // }
               return (
                 <tr key={index}>
                   <td>{contact.id}</td>
