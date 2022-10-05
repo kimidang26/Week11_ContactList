@@ -28,11 +28,11 @@ router.get('/', async (req, res) => {
     console.log([newContact.parentfirst_name, newContact.parentlast_name, newContact.cell_phone, newContact.email ]);
     try {
     const newContact = await db.query(
-      'INSERT INTO contact(parentfirst_name, parentlast_name, cell_phone, email) VALUES($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO contact (parentfirst_name, parentlast_name, cell_phone, email) VALUES($1, $2, $3, $4) RETURNING *',
       [ newContact.parentfirst_name, newContact.parentlast_name , newContact.cell_phone, newContact.email ],
     );
     console.log(req.body);
-    res.json(newContact);
+    res.send(newContact);
     } catch (e) {
       return res.status(400).json({ e });
     }
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
     }
   });
 
-//*********POST*********/
+//*********PUT / To edit *********/
 
 
 export default router;

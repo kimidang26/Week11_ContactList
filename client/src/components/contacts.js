@@ -6,19 +6,19 @@ const reducer = (state, action) =>{
     switch(action.type) {
         case 'editId' :
             console.log('Logged if the editId action is being dispatched')
-            return { ...state, name: action.payload };
+            return { ...state, id: action.payload };
   
         case 'editFirstName':
-        return { ...state, description: action.payload };
+        return { ...state, parentfirst_name: action.payload };
   
         case 'editLastName':
-        return { ...state, category: action.payload };
+        return { ...state, parentlast_name: action.payload };
 
         case 'editCellPhone':
-        return { ...state, date: action.payload };
+        return { ...state, cell_phone: action.payload };
 
         case 'editEmail':
-        return { ...state, id: action.payload };
+        return { ...state, email: action.payload };
 
         case 'clearForm':
             return {
@@ -78,7 +78,7 @@ const handleAddContact = async (e) => {
       id: state.id, 
       parentfirst_name: state.parentfirst_name, 
       parentlast_name: state.parentlast_name, 
-      phone_number: state.phone_number, 
+      cell_phone: state.cell_phone, 
       email: state.email
     };
     console.log(newContact);
@@ -100,7 +100,7 @@ const handleAddContact = async (e) => {
 // **************Delete*************
 
 const handleDeleteContact = async (handleDeleteContactCallback) => {
-  const response = await fetch(`http://localhost:2626/species/${handleDeleteContactCallback}`, {
+  const response = await fetch('http://localhost:2626/contact/${handleDeleteContactCallback}', {
     method: 'DELETE',
   })
   await response.json();
@@ -161,7 +161,7 @@ const AddContact = (newContact) => {
                   <input type="text" id="editFirstName" name="firstname" placeholder="parent first name" value={state.parentfirst_name} onChange={(e) => dispatch({type: "editFirstName", payload: e.target.value,})} />
                   <br />
                 <label>Parent Last Name:</label>
-                  <input type="text" id="editLastName" name="lastname" placeholder="parent last name" value={state.parentlast_name} onChange={(e) => dispatch({type: "editLasttName", payload: e.target.value,})} />
+                  <input type="text" id="editLastName" name="lastname" placeholder="parent last name" value={state.parentlast_name} onChange={(e) => dispatch({type: "editLastName", payload: e.target.value,})} />
                   <br />
                 <label>Parent Cell Number:</label>
                   <input type="text" id="editCellPhone" name="cellphone" placeholder="parent cell number" value={state.cell_phone} onChange={(e) => dispatch({type: "editCellPhone", payload: e.target.value,})} />
