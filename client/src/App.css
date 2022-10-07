@@ -1,3 +1,6 @@
+html {
+  background-color:rgb(238, 238, 227);
+}
 .App {
   text-align: center;
 }
@@ -24,6 +27,28 @@
   color: white;
 }
 
+h1{
+  font-family: 'Schoolbell', cursive;
+  font-size: 70px;
+}
+
+h2{
+  font-family: 'Schoolbell', cursive;
+  font-size: 40px;
+} 
+
+th{
+  font-family: 'Schoolbell', cursive;
+  padding: 80px;
+  border-color: black;
+  font-size: 25px;
+} 
+
+
+label {
+    font-family: 'Schoolbell', cursive;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +60,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+img {
+  height: 100px;
+  height: 100px;
 }
